@@ -1,4 +1,4 @@
-package com.onlinestore.api.file.web;
+package com.onlinestore.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class FileResourceHandlerCofig implements WebMvcConfigurer {
+public class FileUploadConfig implements WebMvcConfigurer {
 
     @Value("${file.client-path}")
     private String fileResClientPath;

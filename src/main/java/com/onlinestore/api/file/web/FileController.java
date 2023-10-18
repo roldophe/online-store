@@ -2,12 +2,11 @@ package com.onlinestore.api.file.web;
 
 import com.onlinestore.api.file.FileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -15,12 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileController {
     private final FileService fileService;
-    @PostMapping("/single")
-    public FileDto uploadSingle(@RequestPart MultipartFile file){
+
+    @PostMapping(value = "/single", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public FileDto uploadSingle(@RequestPart MultipartFile file) {
         return fileService.uploadSingle(file);
     }
-    @PostMapping("/multiple")
-    public List<FileDto> uploadMultiple(@RequestPart List<MultipartFile> fileList){
+
+    @PostMapping(value = "/multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<FileDto> uploadMultiple(@RequestPart List<MultipartFile> fileList) {
         return fileService.uploadMultiple(fileList);
+    }
+
+    @GetMapping("/{name}")
+    public FileDto findByName(@PathVariable String name) throws IOException {
+        return fileService.findByName(name);
     }
 }

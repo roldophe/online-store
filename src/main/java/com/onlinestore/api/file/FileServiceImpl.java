@@ -2,9 +2,15 @@ package com.onlinestore.api.file;
 
 import com.onlinestore.api.file.web.FileDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.plaf.UIResource;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -23,6 +30,39 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileDto uploadSingle(MultipartFile file) {
+        return this.save(file);
+    }
+
+    @Override
+    public List<FileDto> uploadMultiple(List<MultipartFile> fileList) {
+        return fileList.stream()
+                .map(this::save)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public FileDto findByName(String name) throws IOException {
+        Path path = Paths.get(serverPath + name);
+        if (Files.exists(path)) {
+            Resource resource = UrlResource.from(path.toUri());
+
+            return FileDto.builder()
+                    .name(name)
+                    .uri(fileBaseUri + name)
+                    .extension(this.getExtension(name))
+                    .size(resource.contentLength())
+                    .build();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found!");
+
+    }
+
+    private String getExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf(".");
+        return fileName.substring(lastDotIndex + 1);
+    }
+
+    private FileDto save(MultipartFile file) {
         //Get file extension
         int lastDotIndex = file.getOriginalFilename().lastIndexOf(".");
         String extension = file.getOriginalFilename().substring(lastDotIndex + 1);
@@ -45,15 +85,5 @@ public class FileServiceImpl implements FileService {
                 .size(size)
                 .uri(uri)
                 .build();
-    }
-
-    @Override
-    public List<FileDto> uploadMultiple(List<MultipartFile> fileList) {
-        List<FileDto> uploadedFiles = new ArrayList<>();
-        for (MultipartFile file : fileList) {
-            FileDto fileDto = uploadSingle(file);
-            uploadedFiles.add(fileDto);
-        }
-        return uploadedFiles;
     }
 }

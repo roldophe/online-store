@@ -4,8 +4,9 @@ import lombok.Builder;
 
 @Builder
 
-public record FileDto (String name,
-                       String uri,
-                       Long size,
-                       String extension){
+public record FileDto(String name,
+                      String uri,
+                      String downloadUri,
+                      Long size,
+                      String extension) {
 }

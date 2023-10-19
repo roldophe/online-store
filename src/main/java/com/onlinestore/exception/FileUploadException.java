@@ -14,7 +14,8 @@ public class FileUploadException {
     @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public BaseError<?> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
-        return BaseError.builder().message("Something went wrong!")
+        return BaseError.builder()
+                .message("Something went wrong!")
                 .status(false)
                 .code(7020)
                 .timestamp(LocalDateTime.now())

@@ -1,9 +1,7 @@
 package com.onlinestore.api.file.web;
 
 import com.onlinestore.api.file.FileService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,8 +33,8 @@ public class FileController {
     }
 
     @PostMapping(value = "/multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public List<FileDto> uploadMultiple(@RequestPart List<MultipartFile> fileList) {
-        return fileService.uploadMultiple(fileList);
+    public List<FileDto> uploadMultiple(@RequestPart List<MultipartFile> files) {
+        return fileService.uploadMultiple(files);
     }
 
     @GetMapping("/{name}")

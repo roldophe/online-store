@@ -46,8 +46,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FileDto> uploadMultiple(List<MultipartFile> fileList) {
-        return fileList.stream()
+    public List<FileDto> uploadMultiple(List<MultipartFile> files) {
+        return files.stream()
                 .map(this::save)
                 .collect(Collectors.toList());
     }

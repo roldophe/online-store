@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProductMapper {
     @Mapping(source = "categoryId",target = "category.id")
     Product fromCreateProductDto(CreateProductDto createProductDto);
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+
     void fromUpdateProductDto(@MappingTarget Product product, UpdateProductDto updateProductDto);
     @Mapping(source = "category.name",target = "category")
     ProductDto toProductDto(Product product);

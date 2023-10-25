@@ -30,11 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateByUuid(String uuid, UpdateProductDto updateProductDto) {
-        /**
-         * Business logic layer
-         */
         //step1: check uuid of product in the database
-
         if (productRepository.existsByUuid(uuid)) {
             Product product = productRepository.findByUuid(uuid).orElseThrow(() ->
                     new ResponseStatusException(HttpStatus.NOT_FOUND,

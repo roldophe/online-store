@@ -1,11 +1,11 @@
-package com.onlinestore.api.auth;
+package com.onlinestore.api.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.Set;
 
-import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,6 +35,6 @@ public class User {
             inverseJoinColumns =
             @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
 }

@@ -15,6 +15,6 @@ public record RegisterDto(@NotBlank
                           @Size(min = 3)
                           String nickName,
                           @NotNull
-                          @Size(min=1)
+                          @Size(min = 1)
                           Set<@Positive Integer> roleIds) {
 }

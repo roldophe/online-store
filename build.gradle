@@ -22,6 +22,10 @@ repositories {
 }
 
 dependencies {
+    //Thymeleaf template engine
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //send mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     //Swigger UI
     implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0')

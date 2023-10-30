@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.fromCreateProductDto(createProductDto);
         product.setUuid(UUID.randomUUID().toString());
         product.setCode("PRO-" + RandomUtil.generateCode());
+        System.out.println(product);
         productRepository.save(product);
     }
 

@@ -1,5 +1,8 @@
 package com.onlinestore.init;
 
+import com.onlinestore.api.product.Category;
+import com.onlinestore.api.product.CategoryRepository;
+import com.onlinestore.api.product.CategoryService;
 import com.onlinestore.api.user.Authority;
 import com.onlinestore.api.user.AuthorityRepository;
 import com.onlinestore.api.user.Role;
@@ -18,8 +21,20 @@ public class DataInit {
     private final AuthorityRepository authorityRepository;
     private final RoleRepository roleRepository;
 
+    private final CategoryRepository categoryRepository;
     @PostConstruct
     public void init() {
+
+        categoryRepository.save(Category.builder()
+                .name("electronics")
+                .description("Electronics")
+                .build());
+        categoryRepository.save(Category.builder()
+                .name("technology")
+                .description("Technology")
+                .build());
+
+
         Authority readProduct = Authority.builder().name("product:read").build();
         Authority writeProduct = Authority.builder().name("product:write").build();
         Authority deleteProduct = Authority.builder().name("product:delete").build();

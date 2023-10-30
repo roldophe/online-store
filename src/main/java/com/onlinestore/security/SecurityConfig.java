@@ -3,47 +3,29 @@ package com.onlinestore.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        //Create admin
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("12345"))
-                .roles("ADMIN")
-                .build();
-
-        //Create staff
-        UserDetails staff = User.withUsername("staff")
-                .password(passwordEncoder.encode("12345"))
-                .roles("STAFF")
-                .build();
-        //Create customer
-        UserDetails customer = User.withUsername("customer")
-                .password(passwordEncoder.encode("12345"))
-                .roles("CUSTOMER")
-                .build();
-
-        manager.createUser(admin);
-        manager.createUser(staff);
-        manager.createUser(customer);
-        return manager;
+    DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
     }
 
     @Bean
@@ -51,7 +33,7 @@ public class SecurityConfig {
         //What you want to customize
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/categories/**").hasAnyRole("ADMIN","STAFF")
+                .requestMatchers("/api/v1/categories/**").hasAnyAuthority("ADMIN", "STAFF")
                 .anyRequest().authenticated());
 
         //TODO: User default form login

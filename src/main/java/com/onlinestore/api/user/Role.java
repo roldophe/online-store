@@ -20,7 +20,7 @@ public class Role {
     private String name;
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns =
     @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "auth_id", referencedColumnName = "id"))

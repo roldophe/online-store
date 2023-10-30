@@ -5,6 +5,7 @@ import com.onlinestore.api.user.web.UpdateUserDto;
 import com.onlinestore.api.user.web.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toSet());
         User user = userMapper.fromCreateUserDto(newUserDto);
         user.setUuid(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(newUserDto.password()));
         user.setIsVerified(false);
         user.setIsDeleted(false);
         user.setRoles(roles);

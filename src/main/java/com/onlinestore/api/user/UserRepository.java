@@ -38,4 +38,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByUsernameAndIsDeletedFalse(String username);
 
     Boolean existsByEmailAndIsDeletedFalse(String email);
+
+    Optional<User> findByUsernameAndIsDeletedFalse(String username);
 }

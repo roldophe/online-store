@@ -17,6 +17,6 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "authorities",fetch = FetchType.EAGER)
     private Set<Role> roles;
 }

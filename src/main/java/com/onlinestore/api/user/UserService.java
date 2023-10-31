@@ -3,10 +3,12 @@ package com.onlinestore.api.user;
 import com.onlinestore.api.user.web.NewUserDto;
 import com.onlinestore.api.user.web.UpdateUserDto;
 import com.onlinestore.api.user.web.UserDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
 public interface UserService {
+    UserDto me(Authentication authentication );
 
     /**
      * This method is used to create a new user resource into a database

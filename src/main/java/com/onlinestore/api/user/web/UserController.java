@@ -4,6 +4,7 @@ import com.onlinestore.api.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +15,16 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/me")
+    public UserDto me(Authentication authentication) {
+        return userService.me(authentication);
+    }
+
     @PostMapping
     public void createNewUser(@RequestBody @Valid NewUserDto newUserDto) {
         userService.createNewUser(newUserDto);
     }
+
     @GetMapping()
     public List<UserDto> findAllUsers() {
         return userService.findAll();

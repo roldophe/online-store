@@ -3,6 +3,7 @@ package com.onlinestore.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,8 +33,30 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //What you want to customize
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/categories/**").hasAnyAuthority("ADMIN", "STAFF")
+                .requestMatchers("/api/v1/auth/**", "/api/v1/files/**").permitAll()
+                .requestMatchers(
+                        HttpMethod.GET,
+                        "/api/v1/categories/**",
+                        "/api/v1/products").hasAuthority("product:read")
+                .requestMatchers(
+                        HttpMethod.POST,
+                        "/api/v1/categories/**",
+                        "/api/v1/products").hasAuthority("product:write")
+                .requestMatchers(
+                        HttpMethod.PUT,
+                        "/api/v1/categories/**",
+                        "/api/v1/products").hasAuthority("product:update")
+                .requestMatchers(
+                        HttpMethod.DELETE,
+                        "/api/v1/categories/**",
+                        "/api/v1/products").hasAuthority("product:delete")
+
+
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("user:read")
+                .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasAuthority("user:write")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("user:delete")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAuthority("user:update")
+
                 .anyRequest().authenticated());
 
         //TODO: User default form login

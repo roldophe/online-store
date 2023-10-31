@@ -3,8 +3,10 @@ package com.onlinestore.api.user;
 import com.onlinestore.api.user.web.NewUserDto;
 import com.onlinestore.api.user.web.UpdateUserDto;
 import com.onlinestore.api.user.web.UserDto;
+import com.onlinestore.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDto me(Authentication authentication) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        return userMapper.toUserDto(customUserDetails.getUser());
+    }
 
     @Transactional
     @Override

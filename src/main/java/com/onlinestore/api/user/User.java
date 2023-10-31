@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.Set;
 
 @Getter
@@ -17,9 +18,9 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String uuid;
-    @Column(unique = true,length = 80, nullable = false)
+    @Column(unique = true, length = 80, nullable = false)
     private String username;
-    @Column(unique = true,length = 80, nullable = false)
+    @Column(unique = true, length = 80, nullable = false)
     private String email;
     @Column(name = "encrypted_passwd", nullable = false)
     private String password;

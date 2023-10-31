@@ -22,18 +22,22 @@ public class DataInit {
     private final RoleRepository roleRepository;
 
     private final CategoryRepository categoryRepository;
+
     @PostConstruct
     public void init() {
-
+//
 //        categoryRepository.save(Category.builder()
-//                .name("electronics")
-//                .description("Electronics")
+//                .name("Electronic")
+//                .description("Electronic")
 //                .build());
 //        categoryRepository.save(Category.builder()
-//                .name("technology")
+//                .name("Technology")
 //                .description("Technology")
 //                .build());
-//
+//        categoryRepository.save(Category.builder()
+//                .name("LifeStyle")
+//                .description("LifeStyle")
+//                .build());
 //
 //        Authority readProduct = Authority.builder().name("product:read").build();
 //        Authority writeProduct = Authority.builder().name("product:write").build();
@@ -48,8 +52,10 @@ public class DataInit {
 //        Authority writeUser = Authority.builder().name("user:write").build();
 //        Authority deleteUser = Authority.builder().name("user:delete").build();
 //        Authority updateUser = Authority.builder().name("user:update").build();
+//        Authority userProfile = Authority.builder().name("user:profile").build();
+//
 //        Set<Authority> userAuthorities = Set.of(
-//                readUser, writeUser, deleteUser, updateUser
+//                readUser, writeUser, deleteUser, updateUser, userProfile
 //        );
 //        authorityRepository.saveAll(userAuthorities);
 //
@@ -63,15 +69,18 @@ public class DataInit {
 //                .authorities(fullAuthorities)
 //                .build();
 //        Role staffRole = Role.builder().name("STAFF")
-//                .authorities(productAuthorities)
+//                .authorities(new HashSet<>() {{
+//                    addAll(productAuthorities);
+//                    add(userProfile);
+//                }})
 //                .build();
 //        Role customerRole = Role.builder()
 //                .name("CUSTOMER")
 //                .authorities(Set.of(
-//                        writeUser, readUser, updateUser,
-//                        readProduct
+//                        readProduct, userProfile
 //                ))
 //                .build();
 //        roleRepository.saveAll(List.of(adminRole, staffRole, customerRole));
+//
     }
 }

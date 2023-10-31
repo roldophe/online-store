@@ -31,4 +31,9 @@ public class AuthController {
         authService.verify(verifyDto);
         return Map.of("message", "Congratulation! Email has been verified..!");
     }
+
+    @PostMapping("/login")
+    public AuthDto login(@Valid @RequestBody LoginDto loginDto) {
+        return authService.login(loginDto);
+    }
 }

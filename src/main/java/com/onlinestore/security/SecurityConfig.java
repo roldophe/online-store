@@ -51,7 +51,7 @@ public class SecurityConfig {
                         "/api/v1/categories/**",
                         "/api/v1/products").hasAuthority("product:delete")
 
-
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAuthority("user:profile")
                 .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("user:read")
                 .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasAuthority("user:write")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("user:delete")

@@ -55,6 +55,7 @@ public class AuthServiceImpl implements AuthService {
     void setJwtRefreshTokenEncoder(@Qualifier("refreshTokenJwtEncoder") JwtEncoder jwtRefreshTokenEncoder) {
         this.jwtRefreshTokenEncoder = jwtRefreshTokenEncoder;
     }
+
     @PreAuthorize("hasAuthority('SCOPE_refresh_token')")
     @Override
     public AuthDto refreshToken(RefreshTokenDto refreshTokenDto) {
@@ -67,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
 
         Instant now = Instant.now();
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
-                .id(auth.getName())
+                .id(jwt.getId())
                 .issuer("public")
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.SECONDS))
@@ -76,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
                 .claim("scope", jwt.getClaimAsString("scope"))
                 .build();
         JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
-                .id(auth.getName())
+                .id(jwt.getId())
                 .issuer("public")
                 .issuedAt(now)
                 .subject("Refresh Token")
@@ -127,6 +128,7 @@ public class AuthServiceImpl implements AuthService {
                 .refreshToken(reRefreshToken)
                 .build();
     }
+
     @Transactional
     @Override
     public void register(RegisterDto registerDto) {

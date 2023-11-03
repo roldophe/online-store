@@ -18,9 +18,14 @@ public class AuthController {
     @Value("${app.base-uri}")
     private String appBaseUri;
 
+    @PostMapping("/token")
+    public AuthDto refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto) {
+        return authService.refreshToken(refreshTokenDto);
+    }
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, String> register(@Valid @RequestBody RegisterDto registerDto) throws MessagingException {
+    public Map<String, String> register(@Valid @RequestBody RegisterDto registerDto){
         authService.register(registerDto);
         return Map.of("message", "Please check email and verified...!",
                 "verifyUri", appBaseUri + "auth/verify?email=" + registerDto.email());

@@ -3,7 +3,6 @@ package com.onlinestore.api.user;
 import com.onlinestore.api.user.web.NewUserDto;
 import com.onlinestore.api.user.web.UpdateUserDto;
 import com.onlinestore.api.user.web.UserDto;
-import com.onlinestore.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
         Jwt jwt = (Jwt) authentication.getPrincipal();
         log.info("Jwt Subject = {}", jwt.getSubject());
         log.info("Jwt Id = {}", jwt.getId());
-        User user = userRepository.findByUsernameAndIsDeletedFalse(jwt.getId())
+        User user = userRepository.findByUsernameAndIsDeletedFalseAndIsVerifiedTrue(jwt.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User is not found!"));
         return userMapper.toUserDto(user);
     }

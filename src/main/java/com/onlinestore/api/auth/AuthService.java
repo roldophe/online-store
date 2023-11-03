@@ -1,13 +1,13 @@
 package com.onlinestore.api.auth;
 
-import com.onlinestore.api.auth.web.AuthDto;
-import com.onlinestore.api.auth.web.LoginDto;
-import com.onlinestore.api.auth.web.RegisterDto;
-import com.onlinestore.api.auth.web.VerifyDto;
-import jakarta.mail.MessagingException;
+import com.onlinestore.api.auth.web.*;
 
 public interface AuthService {
-    void register(RegisterDto registerDto) throws MessagingException;
+    AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
+
+    void register(RegisterDto registerDto);
+
     AuthDto login(LoginDto loginDto);
+
     void verify(VerifyDto verifyDto);
 }

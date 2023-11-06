@@ -64,8 +64,6 @@ public class AuthServiceImpl implements AuthService {
         Authentication auth = new BearerTokenAuthenticationToken(refreshTokenDto.refreshToken());
         auth = jwtAuthenticationProvider.authenticate(auth);
         Jwt jwt = (Jwt) auth.getPrincipal();
-        log.info("Name: {}", jwt.getId());
-        log.info("Name: {}", jwt.getSubject());
 
         return AuthDto.builder()
                 .type("Bearer")
@@ -116,6 +114,7 @@ public class AuthServiceImpl implements AuthService {
         String scope = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
+
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .id(auth.getName())
                 .issuer("public")

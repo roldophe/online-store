@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -66,6 +67,14 @@ public class AuthServiceImpl implements AuthService {
         log.info("Name: {}", jwt.getId());
         log.info("Name: {}", jwt.getSubject());
 
+        return AuthDto.builder()
+                .type("Bearer")
+                .accessToken(generateAccessToken(jwt))
+                .refreshToken(generateRefreshToken(jwt))
+                .build();
+    }
+
+    private String generateAccessToken(Jwt jwt) {
         Instant now = Instant.now();
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .id(jwt.getId())
@@ -76,22 +85,27 @@ public class AuthServiceImpl implements AuthService {
                 .audience(List.of("Public Client"))
                 .claim("scope", jwt.getClaimAsString("scope"))
                 .build();
-        JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
-                .id(jwt.getId())
-                .issuer("public")
-                .issuedAt(now)
-                .subject("Refresh Token")
-                .audience(List.of("Public Client"))
-                .claim("scope", jwt.getClaimAsString("scope"))
-                .expiresAt(now.plus(24, ChronoUnit.HOURS))
-                .build();
-        String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
-        String reRefreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
-        return AuthDto.builder()
-                .type("Bearer")
-                .accessToken(accessToken)
-                .refreshToken(reRefreshToken)
-                .build();
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+    }
+
+    private String generateRefreshToken(Jwt jwt) {
+        Instant now = Instant.now();
+        String reRefreshToken = jwt.getTokenValue();
+        Duration duration = Duration.between(now, jwt.getExpiresAt());
+        log.info("expiration:{}", duration.toDays());
+        if (duration.toDays() < 7) {
+            JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
+                    .id(jwt.getId())
+                    .issuer("public")
+                    .issuedAt(now)
+                    .subject("Refresh Token")
+                    .audience(List.of("Public Client"))
+                    .claim("scope", jwt.getClaimAsString("scope"))
+                    .expiresAt(now.plus(30, ChronoUnit.DAYS))
+                    .build();
+            reRefreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
+        }
+        return reRefreshToken;
     }
 
     @Override
@@ -115,7 +129,7 @@ public class AuthServiceImpl implements AuthService {
                 .id(auth.getName())
                 .issuer("public")
                 .issuedAt(now)
-                .expiresAt(now.plus(24, ChronoUnit.HOURS))
+                .expiresAt(now.plus(30, ChronoUnit.DAYS))
                 .subject("Refresh Token")
                 .audience(List.of("Public Client"))
                 .claim("scope", scope)

@@ -1,6 +1,7 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.mapper;
 
-import com.onlinestore.api.product.web.CategoryDto;
+import com.onlinestore.api.product.model.Category;
+import com.onlinestore.api.product.web.dto.CategoryDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;

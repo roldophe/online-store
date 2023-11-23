@@ -1,8 +1,8 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.service;
 
-import com.onlinestore.api.product.web.UpdateProductDto;
-import com.onlinestore.api.product.web.CreateProductDto;
-import com.onlinestore.api.product.web.ProductDto;
+import com.onlinestore.api.product.web.dto.UpdateProductDto;
+import com.onlinestore.api.product.web.dto.AddProductDto;
+import com.onlinestore.api.product.web.dto.ProductDto;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ public interface ProductService {
     /**
      * This method is used to create a new product resource into a database
      *
-     * @param createProductDto is request data from a client
+     * @param addProductDto is request data from a client
      */
-    void createNew(CreateProductDto createProductDto);
+    void createNew(AddProductDto addProductDto);
 
     /**
      * This method is used to update a product resource in the database based on its UUID.

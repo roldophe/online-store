@@ -1,9 +1,9 @@
 package com.onlinestore.api.product.web;
 
-import com.onlinestore.api.product.ProductService;
-import com.onlinestore.api.product.web.UpdateProductDto;
-import com.onlinestore.api.product.web.CreateProductDto;
-import com.onlinestore.api.product.web.ProductDto;
+import com.onlinestore.api.product.service.ProductService;
+import com.onlinestore.api.product.web.dto.UpdateProductDto;
+import com.onlinestore.api.product.web.dto.AddProductDto;
+import com.onlinestore.api.product.web.dto.ProductDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +25,9 @@ public class ProductController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNew(@RequestBody @Valid CreateProductDto createProductDto){
+    public void createNew(@RequestBody @Valid AddProductDto addProductDto){
         ///System.out.println("Product:" +createProductDto);
-        productService.createNew(createProductDto);
+        productService.createNew(addProductDto);
     }
     @GetMapping
     public List<ProductDto> findAll(){

@@ -1,4 +1,4 @@
-package com.onlinestore.api.product.web;
+package com.onlinestore.api.product.web.dto;
 
 import jakarta.validation.constraints.*;
 

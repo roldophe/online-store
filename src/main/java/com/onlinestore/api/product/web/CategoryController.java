@@ -1,7 +1,8 @@
 package com.onlinestore.api.product.web;
 
-import com.onlinestore.api.product.CategoryServiceImpl;
-import com.onlinestore.api.product.web.CategoryDto;
+import com.onlinestore.api.product.service.impl.CategoryServiceImpl;
+import com.onlinestore.api.product.web.dto.CategoryDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class CategoryController {
     }
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewCategory(@RequestBody CategoryDto categoryDto){
+    public void createNewCategory(@RequestBody @Valid CategoryDto categoryDto){
         categoryService.createNew(categoryDto);
     }
 

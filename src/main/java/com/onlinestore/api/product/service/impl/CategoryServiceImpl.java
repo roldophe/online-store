@@ -1,6 +1,10 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.service.impl;
 
-import com.onlinestore.api.product.web.CategoryDto;
+import com.onlinestore.api.product.model.Category;
+import com.onlinestore.api.product.mapper.CategoryMapper;
+import com.onlinestore.api.product.CategoryRepository;
+import com.onlinestore.api.product.service.CategoryService;
+import com.onlinestore.api.product.web.dto.CategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

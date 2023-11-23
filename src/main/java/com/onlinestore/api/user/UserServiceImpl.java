@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto me(Authentication authentication) {
         Jwt jwt = (Jwt) authentication.getPrincipal();
-        log.info("Jwt Subject = {}", jwt.getSubject());
-        log.info("Jwt Id = {}", jwt.getId());
+//        log.info("Jwt Subject = {}", jwt.getSubject());
+//        log.info("Jwt Id = {}", jwt.getId());
         User user = userRepository.findByUsernameAndIsDeletedFalseAndIsVerifiedTrue(jwt.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User is not found!"));
         return userMapper.toUserDto(user);

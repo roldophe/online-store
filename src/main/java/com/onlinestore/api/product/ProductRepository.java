@@ -1,5 +1,6 @@
 package com.onlinestore.api.product;
 
+import com.onlinestore.api.product.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

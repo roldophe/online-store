@@ -1,8 +1,13 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.service.impl;
 
-import com.onlinestore.api.product.web.CreateProductDto;
-import com.onlinestore.api.product.web.UpdateProductDto;
-import com.onlinestore.api.product.web.ProductDto;
+import com.onlinestore.api.product.model.Category;
+import com.onlinestore.api.product.model.Product;
+import com.onlinestore.api.product.mapper.ProductMapper;
+import com.onlinestore.api.product.ProductRepository;
+import com.onlinestore.api.product.service.ProductService;
+import com.onlinestore.api.product.web.dto.AddProductDto;
+import com.onlinestore.api.product.web.dto.UpdateProductDto;
+import com.onlinestore.api.product.web.dto.ProductDto;
 import com.onlinestore.utils.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void createNew(CreateProductDto createProductDto) {
-        Product product = productMapper.fromCreateProductDto(createProductDto);
+    public void createNew(AddProductDto addProductDto) {
+        Product product = productMapper.fromCreateProductDto(addProductDto);
         product.setUuid(UUID.randomUUID().toString());
         product.setCode("PRO-" + RandomUtil.generateCode());
         System.out.println(product);

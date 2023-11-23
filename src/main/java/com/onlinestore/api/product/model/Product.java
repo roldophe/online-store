@@ -1,13 +1,9 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @ToString
 @Entity
@@ -28,4 +24,7 @@ public class Product {
     @ManyToOne //many products to one category
     @JoinColumn(name = "cate_id")
     private Category category;
+    @ManyToOne //many products to one category
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 }

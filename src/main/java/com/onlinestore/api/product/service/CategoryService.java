@@ -1,6 +1,6 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.service;
 
-import com.onlinestore.api.product.web.CategoryDto;
+import com.onlinestore.api.product.web.dto.CategoryDto;
 
 import java.util.List;
 

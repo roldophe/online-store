@@ -56,18 +56,22 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**", "/api/v1/files/**","/file/**","/auth/**").permitAll()
                 .requestMatchers(
                         HttpMethod.GET,
+                        "/api/v1/suppliers/**",
                         "/api/v1/categories/**",
                         "/api/v1/products").hasAuthority("SCOPE_product:read")
                 .requestMatchers(
                         HttpMethod.POST,
+                        "/api/v1/suppliers/**",
                         "/api/v1/categories/**",
                         "/api/v1/products").hasAuthority("SCOPE_product:write")
                 .requestMatchers(
                         HttpMethod.PUT,
+                        "/api/v1/suppliers/**",
                         "/api/v1/categories/**",
                         "/api/v1/products").hasAuthority("SCOPE_product:update")
                 .requestMatchers(
                         HttpMethod.DELETE,
+                        "/api/v1/suppliers/**",
                         "/api/v1/categories/**",
                         "/api/v1/products").hasAuthority("SCOPE_product:delete")
 

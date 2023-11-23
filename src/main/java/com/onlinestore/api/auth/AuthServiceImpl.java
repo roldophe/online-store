@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(generateAccessToken(GenerateTokenDto.builder()
                         .auth(jwt.getId())
                         .scope(jwt.getClaimAsString("scope"))
-                        .expiration(Instant.now().plus(1, ChronoUnit.SECONDS))
+                        .expiration(Instant.now().plus(60, ChronoUnit.MINUTES))
                         .build()))
                 .refreshToken(generateRefreshTokenCheckDuration(GenerateTokenDto.builder()
                         .auth(jwt.getId())
@@ -147,7 +147,7 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(generateAccessToken(GenerateTokenDto.builder()
                         .auth(auth.getName())
                         .scope(scope)
-                        .expiration(Instant.now().plus(1, ChronoUnit.SECONDS))
+                        .expiration(Instant.now().plus(60, ChronoUnit.SECONDS))
                         .build()))
                 .refreshToken(generateRefreshToken(GenerateTokenDto.builder()
                         .auth(auth.getName())
@@ -181,11 +181,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void verify(VerifyDto verifyDto) {
-        User verifiedUser = authRepository.findByEmailAndVerifiedCodeIsAndIsDeletedFalse(verifyDto.email(), verifyDto.verifiedCode())
+        log.info("verifyDto: {}",verifyDto);
+        User verifiedUser = authRepository.findByEmailAndVerifiedCodeAndIsDeletedFalse(verifyDto.email(), verifyDto.verifiedCode())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
                         "Verify email has been failed..!"
                 ));
+        log.info("verifiedUser:{}",verifiedUser);
         verifiedUser.setIsVerified(true);
         verifiedUser.setVerifiedCode(null);
         authRepository.save(verifiedUser);

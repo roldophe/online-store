@@ -12,5 +12,5 @@ public interface AuthRepository extends JpaRepository<User,Long> {
     @Modifying
     @Query("UPDATE User as u SET u.verifiedCode=?2 WHERE u.username=?1")
     void updateVerifiedCode(String username,String verifiedCode);
-    Optional<User> findByEmailAndVerifiedCodeIsAndIsDeletedFalse(String email, String verifiedCode);
+    Optional<User> findByEmailAndVerifiedCodeAndIsDeletedFalse(String email, String verifiedCode);
 }

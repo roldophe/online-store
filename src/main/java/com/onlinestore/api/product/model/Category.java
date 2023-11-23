@@ -1,4 +1,4 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.model;
 
 import jakarta.persistence.*;
 import lombok.*;

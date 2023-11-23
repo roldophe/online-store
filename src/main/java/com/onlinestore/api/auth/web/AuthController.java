@@ -1,7 +1,6 @@
 package com.onlinestore.api.auth.web;
 
 import com.onlinestore.api.auth.AuthService;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

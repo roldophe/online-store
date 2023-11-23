@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.plaf.UIResource;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,13 +56,6 @@ public class FileServiceImpl implements FileService {
         Path path = Paths.get(serverPath + name);
         if (Files.exists(path)) {
             Resource resource = UrlResource.from(path.toUri());
-//            try {
-//                File file =  resource.getFile();
-//                System.out.println(file.getName());
-//                System.out.println(file.length());
-//            }catch (IOException e){
-//                throw new RuntimeException(e);
-//            }
             return FileDto.builder()
                     .name(name)
                     .uri(fileBaseUri + name)

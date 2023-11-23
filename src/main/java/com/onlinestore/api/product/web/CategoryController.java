@@ -1,5 +1,6 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.web;
 
+import com.onlinestore.api.product.CategoryServiceImpl;
 import com.onlinestore.api.product.web.CategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

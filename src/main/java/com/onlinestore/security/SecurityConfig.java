@@ -1,6 +1,4 @@
 package com.onlinestore.security;
-
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -39,10 +37,8 @@ public class SecurityConfig {
     private final KeyUtil keyUtil;
 
     @Bean
-    JwtAuthenticationProvider jwtAuthenticationProvider() throws JOSEException {
-        JwtAuthenticationProvider provider =
-                new JwtAuthenticationProvider(jwtRefreshTokenDecoder());
-        return provider;
+    JwtAuthenticationProvider jwtAuthenticationProvider() {
+        return new JwtAuthenticationProvider(jwtRefreshTokenDecoder());
     }
 
     @Bean
@@ -57,7 +53,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //What you want to customize
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**", "/api/v1/files/**").permitAll()
+                .requestMatchers("/api/v1/auth/**", "/api/v1/files/**","/file/**","/auth/**").permitAll()
                 .requestMatchers(
                         HttpMethod.GET,
                         "/api/v1/categories/**",
@@ -104,7 +100,7 @@ public class SecurityConfig {
 
     @Bean
     @Primary
-    JwtDecoder jwtDecoder() throws JOSEException {
+    JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(keyUtil.getAccessTokenPublicKey()).build();
     }
 
@@ -131,7 +127,7 @@ public class SecurityConfig {
     }
 
     @Bean("jwtRefreshTokenDecoder")
-    JwtDecoder jwtRefreshTokenDecoder() throws JOSEException {
+    JwtDecoder jwtRefreshTokenDecoder() {
         return NimbusJwtDecoder.withPublicKey(keyUtil.getRefreshTokenPublicKey()).build();
     }
 

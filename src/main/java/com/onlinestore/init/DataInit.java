@@ -26,7 +26,7 @@ public class DataInit {
     @PostConstruct
     public void init() {
 //
-//        categoryRepository.save(Category.builder()
+//        categoryR-                                                                                                                               epository.save(Category.builder()
 //                .name("Electronic")
 //                .description("Electronic")
 //                .build());
@@ -52,7 +52,7 @@ public class DataInit {
 //        Authority writeUser = Authority.builder().name("user:write").build();
 //        Authority deleteUser = Authority.builder().name("user:delete").build();
 //        Authority updateUser = Authority.builder().name("user:update").build();
-//        Authority userProfile = Authority.builder().name("user:profile").build();
+//        324444444Authority userProfile = Authority.builder().name("user:profile").build();
 //
 //        Set<Authority> userAuthorities = Set.of(
 //                readUser, writeUser, deleteUser, updateUser, userProfile
@@ -81,6 +81,6 @@ public class DataInit {
 //                ))
 //                .build();
 //        roleRepository.saveAll(List.of(adminRole, staffRole, customerRole));
-//
+
     }
 }

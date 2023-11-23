@@ -1,7 +1,6 @@
 package com.onlinestore.api.auth.web;
 
 import com.onlinestore.api.auth.AuthService;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +17,14 @@ public class AuthController {
     @Value("${app.base-uri}")
     private String appBaseUri;
 
+    @PostMapping("/token")
+    public AuthDto refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto) {
+        return authService.refreshToken(refreshTokenDto);
+    }
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, String> register(@Valid @RequestBody RegisterDto registerDto) throws MessagingException {
+    public Map<String, String> register(@Valid @RequestBody RegisterDto registerDto){
         authService.register(registerDto);
         return Map.of("message", "Please check email and verified...!",
                 "verifyUri", appBaseUri + "auth/verify?email=" + registerDto.email());
@@ -30,5 +34,10 @@ public class AuthController {
     public Map<String, String> verifiedCode(@RequestBody VerifyDto verifyDto) {
         authService.verify(verifyDto);
         return Map.of("message", "Congratulation! Email has been verified..!");
+    }
+
+    @PostMapping("/login")
+    public AuthDto login(@Valid @RequestBody LoginDto loginDto) {
+        return authService.login(loginDto);
     }
 }

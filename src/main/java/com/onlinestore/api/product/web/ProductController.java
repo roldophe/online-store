@@ -1,5 +1,6 @@
-package com.onlinestore.api.product;
+package com.onlinestore.api.product.web;
 
+import com.onlinestore.api.product.ProductService;
 import com.onlinestore.api.product.web.UpdateProductDto;
 import com.onlinestore.api.product.web.CreateProductDto;
 import com.onlinestore.api.product.web.ProductDto;
